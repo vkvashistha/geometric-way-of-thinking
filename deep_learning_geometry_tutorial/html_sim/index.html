@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deep Learning from Geometry - Simulation</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Deep Learning from Geometry</h1>
+    <p>Visualize neurons as boundaries, activations as gates, layers as shape builders, and training as moving boundaries.</p>
+  </header>
+
+  <main class="layout">
+    <section class="canvas-panel">
+      <canvas id="mainCanvas" width="760" height="760" aria-label="Neural network geometry visualization"></canvas>
+      <div id="status" class="status"></div>
+    </section>
+
+    <aside class="control-panel">
+      <label>
+        Mode
+        <select id="modeSelect">
+          <option value="single">Single neuron boundary</option>
+          <option value="triangle">Three boundaries make a triangle</option>
+          <option value="target">Sun-ray target</option>
+          <option value="train">Trainable neural network</option>
+          <option value="compare">Depth vs width comparison</option>
+        </select>
+      </label>
+
+      <div class="control-group" id="singleControls">
+        <h2>Single neuron</h2>
+        <label>w1 <input id="w1Slider" type="range" min="-5" max="5" step="0.05" value="1.2" /></label>
+        <label>w2 <input id="w2Slider" type="range" min="-5" max="5" step="0.05" value="-0.8" /></label>
+        <label>b <input id="bSlider" type="range" min="-2" max="2" step="0.02" value="0" /></label>
+        <label>
+          Activation
+          <select id="singleActivation">
+            <option value="linear">none / linear</option>
+            <option value="relu">ReLU</option>
+            <option value="sigmoid">sigmoid</option>
+            <option value="tanh">tanh</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="control-group" id="triangleControls">
+        <h2>Triangle</h2>
+        <label>
+          Show
+          <select id="triangleShow">
+            <option value="all">combined triangle</option>
+            <option value="edge0">edge 1 half-plane</option>
+            <option value="edge1">edge 2 half-plane</option>
+            <option value="edge2">edge 3 half-plane</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="control-group" id="sunControls">
+        <h2>Sun rays</h2>
+        <label>
+          Number of rays
+          <select id="rayCount">
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8" selected>8</option>
+            <option value="12">12</option>
+          </select>
+        </label>
+        <label>
+          Samples
+          <select id="sampleCount">
+            <option value="400">400</option>
+            <option value="800" selected>800</option>
+            <option value="1400">1400</option>
+          </select>
+        </label>
+        <button id="newSamplesBtn">Generate new points</button>
+      </div>
+
+      <div class="control-group" id="trainControls">
+        <h2>Training</h2>
+        <label>
+          Architecture
+          <select id="architectureSelect">
+            <option value="2,8,1">2 -> 8 -> 1</option>
+            <option value="2,24,8,1" selected>2 -> 24 -> 8 -> 1</option>
+            <option value="2,64,1">2 -> 64 -> 1</option>
+            <option value="2,16,16,16,1">2 -> 16 -> 16 -> 16 -> 1</option>
+          </select>
+        </label>
+        <label>
+          Hidden activation
+          <select id="hiddenActivation">
+            <option value="relu" selected>ReLU</option>
+            <option value="sigmoid">sigmoid</option>
+            <option value="tanh">tanh</option>
+          </select>
+        </label>
+        <label>
+          Learning rate
+          <input id="learningRate" type="range" min="0.001" max="1.0" step="0.001" value="0.08" />
+          <span id="lrValue">0.08</span>
+        </label>
+        <div class="button-row">
+          <button id="resetModelBtn">Random init</button>
+          <button id="trainOneBtn">Train 1 step</button>
+        </div>
+        <div class="button-row">
+          <button id="train100Btn">Train 100</button>
+          <button id="train1000Btn">Train 1000</button>
+        </div>
+      </div>
+
+      <div class="control-group" id="compareControls">
+        <h2>Compare</h2>
+        <button id="runCompareBtn">Run comparison</button>
+        <div id="compareResults" class="compare-results"></div>
+      </div>
+
+      <section class="explanation">
+        <h2>What to look for</h2>
+        <p id="explanationText"></p>
+      </section>
+    </aside>
+  </main>
+
+  <script src="js/geometry.js"></script>
+  <script src="js/nn.js"></script>
+  <script src="js/draw.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
